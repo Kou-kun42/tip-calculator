@@ -10,8 +10,29 @@
       <input id="bill" value="00.00" type="number" />
       <input id="tip" value="15" type="number" />
       <input id="people" value="1" type="number" />
-      <div id="tip">0.00</div>
-      <div id="total">0.00</div>
+      <div id="tip-display">0.00</div>
+      <div id="total-display">0.00</div>
     </main>
+
+    <script>
+      const billInput = document.querySelector("#bill");
+      const tipInput = document.querySelector("#tip");
+      const peopleInput = document.querySelector("#people");
+      const diplayTip = document.querySelector("#tip-display");
+      const displayTotal = document.querySelector("#total-display");
+
+      billInput.addEventListener("bill", handleBill);
+      tipInput.addEventListener("tip", handleBill);
+      peopleInput.addEventListener("people", handleBill);
+
+      function handleBill() {
+        const bill = parseFloat(billInput.value);
+        const tip = parseFloat(tipInput.value);
+        const people = parseInt(peopleInput.value);
+
+        const tip = (bill * tip) / 100;
+        const total = bill + tip;
+      }
+    </script>
   </body>
 </html>
