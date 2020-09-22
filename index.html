@@ -33,8 +33,8 @@
         const tip = (bill * percent) / 100;
         const total = bill + percent;
 
-        displayTip.innerHTML = tip;
-        displayTotal.innerHTML = total;
+        displayTip.innerHTML = tip.toFixed(2);
+        displayTotal.innerHTML = total.toFixed(2);
       }
     </script>
   </body>
