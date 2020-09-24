@@ -40,6 +40,25 @@ input,
   border-radius: 10px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#total-display {
+  padding: 1.03rem 4rem;
+  margin: 1rem;
+}
+
+#tip-display {
+  border: none;
+  padding: 1.2rem 0rem;
+  text-align: center;
+  font-family: AppleSDGothicNeo-Bold;
+  margin: 1rem;
+}
+
 #displays {
   display: flex;
   flex-direction: row;

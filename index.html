@@ -35,7 +35,7 @@
       <div id="displays">
         <div id="tip-result">
           <label id="tip-label" for="tip-display">Tip</label>
-          <div id="tip-display">0.00</div>
+          <input id="tip-display" value="0.00" min="0" type="number" />
         </div>
         <div id="total-result">
           <label id="total-label" for="total-display">Total</label>
@@ -54,6 +54,7 @@
       billInput.addEventListener("input", handleBill);
       tipInput.addEventListener("input", handleBill);
       peopleInput.addEventListener("input", handleBill);
+      displayTip.addEventListener("input", handleBillFromTip);
 
       const all_items_button = Array.from(document.querySelectorAll("button"));
 
@@ -77,29 +78,58 @@
 
       function handleBill() {
         const bill = parseFloat(billInput.value);
-        const percent = parseFloat(tipInput.value);
-        const people = parseInt(peopleInput.value);
+        let percent = parseFloat(tipInput.value);
+        let people = parseInt(peopleInput.value);
 
         if (people < 1 || isNaN(people)) {
           document.getElementById("people").value = 1;
+          people = 1;
         }
         if (percent < 0 || isNaN(percent)) {
           document.getElementById("tip").value = 0;
+          percent = 0;
         }
 
-        let tip = (bill * percent) / 100;
-        let total = bill + tip;
+        const tip = (bill * percent) / 100;
+        const total = bill + tip;
 
         if (people == 1) {
           document.getElementById("tip-label").innerHTML = "Tip";
           document.getElementById("total-label").innerHTML = "Total";
-          displayTip.innerHTML = tip.toFixed(2);
+          displayTip.value = tip.toFixed(2);
           displayTotal.innerHTML = total.toFixed(2);
         } else {
           document.getElementById("tip-label").innerHTML = "Tip per Person";
           document.getElementById("total-label").innerHTML = "Total per Person";
-          displayTip.innerHTML = (tip / people).toFixed(2);
+          displayTip.value = (tip / people).toFixed(2);
           displayTotal.innerHTML = (total / people).toFixed(2);
+        }
+      }
+
+      function handleBillFromTip() {
+        const bill = parseFloat(billInput.value);
+        const people = parseInt(peopleInput.value);
+        let tipDisplay = parseFloat(displayTip.value);
+
+        if (tipDisplay < 0 || isNaN(tipDisplay)) {
+          document.getElementById("tip-display").value = 0;
+          tipDisplay = 0;
+        }
+
+        const totalBill = bill * people;
+        const percent = (tipDisplay * people * 100) / totalBill;
+        const newBill = tipDisplay + totalBill;
+
+        if (people == 1) {
+          document.getElementById("tip-label").innerHTML = "Tip";
+          document.getElementById("total-label").innerHTML = "Total";
+          tipInput.value = parseInt(percent);
+          displayTotal.innerHTML = newBill.toFixed(2);
+        } else {
+          document.getElementById("tip-label").innerHTML = "Tip per Person";
+          document.getElementById("total-label").innerHTML = "Total per Person";
+          tipInput.value = parseInt(percent * people);
+          displayTotal.innerHTML = (newBill / people).toFixed(2);
         }
       }
     </script>
