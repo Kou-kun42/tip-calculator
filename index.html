@@ -2,16 +2,46 @@
 <html>
   <head>
     <title>Tip Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
     <main>
-      <h1>Tip Calculator</h1>
-      <input id="bill" value="00.00" type="number" />
-      <input id="tip" value="15" type="number" />
-      <input id="people" value="1" type="number" />
-      <div id="tip-display">0.00</div>
-      <div id="total-display">0.00</div>
+      <header>
+        <h1>Tip Calculator</h1>
+      </header>
+      <div id="inputs">
+        <div id="bill-div">
+          <label for="bill">Bill Subtotal</label>
+          <input id="bill" value="00.00" type="number" />
+        </div>
+        <div id="tip-div">
+          <label for="tip">Tip Percentage</label>
+          <div id="tip-button">
+            <button id="tip-minus" class="minus">-</button>
+            <input id="tip" value="15" type="number" />
+            <button id="tip-plus" class="plus">+</button>
+          </div>
+        </div>
+        <div id="people-div">
+          <label for="people">Number of People Paying</label>
+          <div id="people-button">
+            <button id="people-minus" class="minus">-</button>
+            <input id="people" value="1" type="number" />
+            <button id="people-plus" class="plus">+</button>
+          </div>
+        </div>
+      </div>
+      <div id="displays">
+        <div id="tip-result">
+          <label id="tip-label" for="tip-display">Tip</label>
+          <div id="tip-display">0.00</div>
+        </div>
+        <div id="total-result">
+          <label id="total-label" for="total-display">Total</label>
+          <div id="total-display">0.00</div>
+        </div>
+      </div>
     </main>
 
     <script>
@@ -20,21 +50,43 @@
       const peopleInput = document.querySelector("#people");
       const displayTip = document.querySelector("#tip-display");
       const displayTotal = document.querySelector("#total-display");
+      const peopleMinus = document.getElementById("#people-minus");
+      const peoplePlus = document.querySelector("#people-plus");
+      const tipMinus = document.querySelector("#tip-minus");
+      const tipPlus = document.querySelector("#tip-plus");
 
       billInput.addEventListener("input", handleBill);
       tipInput.addEventListener("input", handleBill);
       peopleInput.addEventListener("input", handleBill);
+      peopleMinus.addEventListener("click", minus);
+      peoplePlus.addEventListener("press", plus);
+      tipMinus.addEventListener("click", minus);
+      tipPlus.addEventListener("press", plus);
 
       function handleBill() {
         const bill = parseFloat(billInput.value);
         const percent = parseFloat(tipInput.value);
         const people = parseInt(peopleInput.value);
 
-        const tip = (bill * percent) / 100;
-        const total = bill + percent;
+        let tip = (bill * percent) / 100;
+        let total = bill + percent;
 
-        displayTip.innerHTML = tip.toFixed(2);
-        displayTotal.innerHTML = total.toFixed(2);
+        if (people == 1) {
+          document.getElementById("tip-label").innerHTML = "Tip";
+          document.getElementById("total-label").innerHTML = "Total";
+          displayTip.innerHTML = tip.toFixed(2);
+          displayTotal.innerHTML = total.toFixed(2);
+        } else {
+          document.getElementById("tip-label").innerHTML = "Tip per Person";
+          document.getElementById("total-label").innerHTML = "Total per Person";
+          displayTip.innerHTML = (tip / people).toFixed(2);
+          displayTotal.innerHTML = (total / people).toFixed(2);
+        }
+      }
+
+      function minus() {
+        alert("yeet");
+        peopleInput.innerHTML = 60;
       }
     </script>
   </body>
